@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critter Camp — Design Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+  :root{
+    --meadow:#DEEDDC;
+    --meadow-deep:#CBE2C8;
+    --cream:#FFF9EE;
+    --ink:#29372E;
+    --ink-soft:#5C6B5E;
+    --marigold:#F2A93B;
+    --marigold-deep:#D98A1C;
+    --berry:#D95D4E;
+    --sky:#8FC3D4;
+    --leaf:#5E9B6B;
+    --leaf-soft:#DCEBDD;
+    --line:#B9D2B6;
+    --shadow:0 6px 0 rgba(41,55,46,.10);
+    --r:22px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--meadow);
+    color:var(--ink);
+    font-family:"Nunito","Trebuchet MS",Verdana,sans-serif;
+    font-size:17px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 90px}
+  h1,h2,h3{font-family:"Baloo 2","Arial Rounded MT Bold","Trebuchet MS",sans-serif;line-height:1.08;margin:0}
+  a{color:var(--berry)}
+  :focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:6px}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;
+    padding:64px 0 40px;
+  }
+  @media(max-width:760px){.hero{grid-template-columns:1fr;text-align:center}}
+  .kicker{
+    display:inline-block;font-weight:800;font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--leaf);
+    background:var(--cream);border:2px solid var(--line);
+    padding:6px 14px;border-radius:999px;margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(3rem,8vw,4.8rem);font-weight:800;letter-spacing:-.01em}
+  .hero h1 .dot{color:var(--marigold)}
+  .hero p.lead{font-size:1.15rem;max-width:44ch;color:var(--ink-soft);margin:14px 0 22px}
+  @media(max-width:760px){.hero p.lead{margin-inline:auto}}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  @media(max-width:760px){.chips{justify-content:center}}
+  .chip{
+    font-weight:800;font-size:13.5px;background:var(--cream);
+    border:2px solid var(--line);border-radius:999px;padding:7px 15px;
+    box-shadow:var(--shadow);
+  }
+  .chip b{color:var(--berry)}
+
+  /* mascot */
+  .stage{position:relative;display:flex;justify-content:center}
+  .stage .hill{
+    position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:340px;height:80px;background:var(--meadow-deep);
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .mascot{position:relative;width:min(300px,72vw)}
+  .mascot svg{width:100%;height:auto;display:block}
+  .breath{animation:breath 3.6s ease-in-out infinite;transform-origin:50% 92%}
+  .breath-late{animation:breath 3.6s ease-in-out infinite;animation-delay:.18s;transform-origin:50% 88%}
+  @keyframes breath{0%,100%{transform:scale(1)}50%{transform:scale(1.022,1.03)}}
+  .blink{animation:blink 4.7s infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes blink{0%,91.5%,95.5%,100%{transform:scaleY(1)}93.5%{transform:scaleY(.08)}}
+  .tail{animation:tail 7.3s ease-in-out infinite;transform-origin:18% 80%;transform-box:fill-box}
+  @keyframes tail{0%,82%,100%{transform:rotate(0deg)}88%{transform:rotate(-9deg)}94%{transform:rotate(4deg)}}
+  .spec-tag{
+    position:absolute;font-weight:800;font-size:12.5px;color:var(--ink-soft);
+    background:var(--cream);border:2px dashed var(--line);border-radius:12px;padding:4px 10px;
+    white-space:nowrap;
+  }
+  @media(max-width:760px){.spec-tag{display:none}}
+
+  /* ---------- sections ---------- */
+  section{margin-top:74px}
+  .sec-head{max-width:60ch;margin-bottom:28px}
+  .sec-head h2{font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800}
+  .sec-head p{color:var(--ink-soft);margin:8px 0 0}
+
+  /* ---------- phones ---------- */
+  .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  @media(max-width:860px){.phones{grid-template-columns:1fr;max-width:340px;margin:0 auto}}
+  .phone-card{text-align:center}
+  .phone{
+    background:var(--ink);border-radius:34px;padding:10px;
+    box-shadow:0 10px 0 rgba(41,55,46,.14);
+    aspect-ratio:9/17.5;display:flex;
+  }
+  .screen{
+    background:var(--cream);border-radius:26px;flex:1;overflow:hidden;
+    display:flex;flex-direction:column;position:relative;
+  }
+  .phone-card h3{font-size:1.25rem;margin-top:16px}
+  .phone-card .cap{font-size:14.5px;color:var(--ink-soft);max-width:30ch;margin:4px auto 0}
+
+  /* map screen */
+  .screen .sky-band{background:linear-gradient(var(--sky) 0%,var(--meadow) 70%,var(--meadow) 100%);flex:1;position:relative}
+  .screen svg.map{position:absolute;inset:0;width:100%;height:100%}
+  .pulse{animation:pulse 1.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+
+  /* level screen */
+  .lvl{flex:1;display:flex;flex-direction:column;padding:12px;gap:10px;background:var(--cream)}
+  .lvl .speech{
+    background:#fff;border:2px solid var(--line);border-radius:16px 16px 16px 4px;
+    font-weight:800;font-size:13px;padding:8px 10px;align-self:flex-start;max-width:85%;
+    display:flex;align-items:center;gap:7px;
+  }
+  .lvl .speech .snd{color:var(--berry);font-size:15px}
+  .lvl .mini-fox{width:56px;margin-left:2px}
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:auto}
+  .choice{
+    background:#fff;border:3px solid var(--line);border-radius:18px;
+    font-size:34px;display:flex;align-items:center;justify-content:center;
+    aspect-ratio:1.15;box-shadow:0 4px 0 rgba(41,55,46,.08);
+  }
+  .choice.big{grid-column:1/-1;aspect-ratio:2.6}
+  .choice.right{border-color:var(--leaf);background:var(--leaf-soft)}
+
+  /* celebrate screen */
+  .party{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:relative;background:var(--cream)}
+  .party .fox-big{width:110px}
+  .party .stickers{display:flex;gap:8px;font-size:26px}
+  .party .confetti{position:absolute;font-size:15px;opacity:.9}
+  .party .badge{
+    font-family:"Baloo 2",sans-serif;font-weight:800;color:var(--marigold-deep);
+    font-size:1.05rem;letter-spacing:.02em;
+  }
+
+  /* ---------- alive cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .card{
+    background:var(--cream);border:2px solid var(--line);border-radius:var(--r);
+    padding:24px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:1.3rem;display:flex;align-items:center;gap:10px}
+  .card .num{
+    font-size:.85rem;background:var(--marigold);color:var(--cream);
+    border-radius:999px;padding:2px 11px;font-family:"Baloo 2",sans-serif;
+  }
+  .card p{font-size:15.5px;color:var(--ink-soft);margin:10px 0 0}
+  .card p b{color:var(--ink)}
+  .card .rule{
+    margin-top:14px;font-size:13.5px;font-weight:800;color:var(--leaf);
+    background:var(--leaf-soft);border-radius:12px;padding:7px 12px;display:inline-block;
+  }
+
+  /* ---------- state machine ---------- */
+  .sm{
+    background:var(--cream);border:2px solid var(--line);border-radius:var(--r);
+    padding:28px;box-shadow:var(--shadow);overflow-x:auto;
+  }
+  .sm-row{display:flex;align-items:stretch;gap:0;min-width:640px}
+  .state{
+    flex:1;text-align:center;padding:16px 10px;border-radius:18px;
+    border:3px solid var(--line);background:#fff;position:relative;
+  }
+  .state + .state{margin-left:34px}
+  .state + .state::before{
+    content:"";position:absolute;left:-26px;top:50%;width:18px;height:3px;
+    background:var(--ink-soft);border-radius:2px;
+  }
+  .state .t{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.05rem}
+  .state .d{font-size:13px;color:var(--ink-soft);margin-top:2px}
+  .state .trig{
+    display:inline-block;margin-top:9px;font-size:11.5px;font-weight:800;
+    background:var(--ink);color:var(--cream);border-radius:999px;padding:3px 10px;
+    font-family:"Nunito",sans-serif;
+  }
+  .state.idle{border-color:var(--marigold)}
+  .state.win{border-color:var(--leaf)}
+  .state.retry{border-color:var(--sky)}
+  .sm .base{
+    margin-top:20px;text-align:center;font-weight:800;font-size:14px;color:var(--ink-soft);
+    border-top:3px dashed var(--line);padding-top:14px;
+  }
+  .sm .base b{color:var(--marigold-deep)}
+
+  /* ---------- voice ---------- */
+  .voice{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+  @media(max-width:860px){.voice{grid-template-columns:1fr}}
+  .talk{background:var(--cream);border:2px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--shadow)}
+  .talk .line{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start}
+  .talk .who{
+    flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--marigold);
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+  }
+  .talk .who.kid{background:var(--sky)}
+  .talk .bubble{
+    background:#fff;border:2px solid var(--line);border-radius:4px 18px 18px 18px;
+    padding:9px 14px;font-weight:700;font-size:15px;
+  }
+  .talk .bubble em{color:var(--ink-soft);font-style:normal;font-weight:600;font-size:13.5px;display:block}
+  .mix{background:var(--cream);border:2px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--shadow)}
+  .mix h3{font-size:1.2rem;margin-bottom:14px}
+  .track{display:grid;grid-template-columns:74px 1fr;gap:12px;align-items:center;margin-bottom:12px}
+  .track .lbl{font-weight:800;font-size:13px;letter-spacing:.06em}
+  .track .bar{height:14px;border-radius:999px;background:var(--meadow-deep);position:relative;overflow:hidden}
+  .track .bar i{position:absolute;inset:0;border-radius:999px}
+  .track.vo .bar i{background:var(--berry);width:100%}
+  .track.sfx .bar i{background:var(--marigold);width:55%}
+  .track.mus .bar i{background:var(--leaf);width:100%;opacity:.35}
+  .track.mus .bar::after{
+    content:"ducks under voice";position:absolute;inset:0;display:flex;align-items:center;
+    justify-content:center;font-size:10.5px;font-weight:800;color:var(--ink-soft);letter-spacing:.04em;
+  }
+  .mix ul{margin:16px 0 0;padding-left:20px;font-size:14.5px;color:var(--ink-soft)}
+  .mix li{margin-bottom:6px}
+  .mix li b{color:var(--ink)}
+
+  /* ---------- rules ---------- */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:700px){.rules{grid-template-columns:1fr}}
+  .rule-row{
+    background:var(--cream);border:2px solid var(--line);border-radius:16px;
+    padding:13px 18px;font-weight:700;font-size:15px;display:flex;gap:12px;align-items:center;
+  }
+  .rule-row .no{color:var(--berry);font-family:"Baloo 2",sans-serif;font-weight:800}
+  .rule-row .yes{color:var(--leaf);font-family:"Baloo 2",sans-serif;font-weight:800}
+
+  footer{
+    margin-top:80px;border-top:3px dashed var(--line);padding-top:22px;
+    display:flex;flex-wrap:wrap;gap:8px 26px;justify-content:space-between;
+    font-size:13.5px;font-weight:700;color:var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .breath,.breath-late,.blink,.tail,.pulse{animation:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div>
+      <span class="kicker">Design page · v0.2 · for the team</span>
+      <h1>Critter Camp<span class="dot">.</span></h1>
+      <p class="lead">A learning app for 3–6 year-olds. One friendly fox, a winding road of little wins, and a voice that talks to kids who can't read yet. This page shows how it looks, moves, and sounds.</p>
+      <div class="chips">
+        <span class="chip">Stack&nbsp;<b>Flutter + Rive</b></span>
+        <span class="chip">Gesture&nbsp;<b>tap only</b></span>
+        <span class="chip">Fail state&nbsp;<b>none</b></span>
+        <span class="chip">Backend&nbsp;<b>none</b></span>
+      </div>
+    </div>
+
+    <div class="stage" aria-label="Pip the fox, our mascot, shown breathing and blinking">
+      <div class="hill"></div>
+      <div class="mascot">
+        <!-- Pip the fox: breathing body (3.6s), late shoulders/head, random-feel blink, occasional tail flick -->
+        <svg viewBox="0 0 300 300" role="img" aria-label="Pip the fox">
+          <g class="tail">
+            <path d="M75 235 q-46 6 -52 -28 q22 12 34 4 q-16 -8 -14 -24 q20 22 44 24 z" fill="#E5893B"/>
+            <path d="M30 212 q10 6 27 3 l-4 -10 q-14 4 -23 7z" fill="#FFF3E2"/>
+          </g>
+          <g class="breath">
+            <ellipse cx="150" cy="222" rx="72" ry="58" fill="#F2A93B"/>
+            <ellipse cx="150" cy="238" rx="44" ry="36" fill="#FFF3E2"/>
+            <ellipse cx="96" cy="252" rx="18" ry="12" fill="#D98A1C"/>
+            <ellipse cx="204" cy="252" rx="18" ry="12" fill="#D98A1C"/>
+          </g>
+          <g class="breath-late">
+            <path d="M96 92 l-18 -46 q28 2 44 24 z" fill="#E5893B"/>
+            <path d="M204 92 l18 -46 q-28 2 -44 24 z" fill="#E5893B"/>
+            <path d="M99 84 l-10 -26 q16 4 26 16 z" fill="#5C3A1E"/>
+            <path d="M201 84 l10 -26 q-16 4 -26 16 z" fill="#5C3A1E"/>
+            <circle cx="150" cy="128" r="66" fill="#F2A93B"/>
+            <path d="M150 150 q-34 30 -56 6 q-6 -34 20 -52 q22 -12 36 -6 z" fill="#FFF3E2"/>
+            <path d="M150 150 q34 30 56 6 q6 -34 -20 -52 q-22 -12 -36 -6 z" fill="#FFF3E2"/>
+            <g class="blink">
+              <ellipse cx="122" cy="118" rx="9" ry="11" fill="#29372E"/>
+              <ellipse cx="178" cy="118" rx="9" ry="11" fill="#29372E"/>
+              <circle cx="125" cy="114" r="3" fill="#fff"/>
+              <circle cx="181" cy="114" r="3" fill="#fff"/>
+            </g>
+            <ellipse cx="150" cy="146" rx="11" ry="8.5" fill="#5C3A1E"/>
+            <path d="M138 160 q12 10 24 0" fill="none" stroke="#5C3A1E" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="106" cy="146" r="9" fill="#F6C46B" opacity=".8"/>
+            <circle cx="194" cy="146" r="9" fill="#F6C46B" opacity=".8"/>
+          </g>
+        </svg>
+        <span class="spec-tag" style="top:18%;right:-10%">blinks every 3–5s</span>
+        <span class="spec-tag" style="bottom:26%;left:-16%">breathes on a 3.6s loop</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SCREENS ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>The three screens</h2>
+      <p>Everything the child ever sees. No menus, no text they must read — every tappable thing says its own name out loud.</p>
+    </div>
+
+    <div class="phones">
+      <!-- MAP -->
+      <div class="phone-card">
+        <div class="phone"><div class="screen">
+          <div class="sky-band">
+            <svg class="map" viewBox="0 0 200 380" aria-label="Level map mockup">
+              <path d="M60 350 Q140 330 120 280 Q100 235 65 220 Q25 202 55 165 Q95 130 140 120 Q180 108 150 60"
+                    fill="none" stroke="#CBE2C8" stroke-width="26" stroke-linecap="round"/>
+              <path d="M60 350 Q140 330 120 280 Q100 235 65 220 Q25 202 55 165 Q95 130 140 120 Q180 108 150 60"
+                    fill="none" stroke="#FFF9EE" stroke-width="14" stroke-linecap="round" stroke-dasharray="1 22"/>
+              <!-- done -->
+              <circle cx="60" cy="350" r="21" fill="#5E9B6B"/>
+              <path d="M50 350 l7 7 l13 -14" stroke="#FFF9EE" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="120" cy="280" r="21" fill="#5E9B6B"/>
+              <path d="M110 280 l7 7 l13 -14" stroke="#FFF9EE" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- current -->
+              <g class="pulse">
+                <circle cx="65" cy="220" r="30" fill="#F2A93B"/>
+                <circle cx="65" cy="220" r="30" fill="none" stroke="#D98A1C" stroke-width="4"/>
+                <text x="65" y="232" text-anchor="middle" font-size="30">🐮</text>
+              </g>
+              <!-- locked -->
+              <circle cx="55" cy="165" r="19" fill="#E9E2D2"/>
+              <text x="55" y="172" text-anchor="middle" font-size="16">🔒</text>
+              <circle cx="140" cy="120" r="19" fill="#E9E2D2"/>
+              <text x="140" y="127" text-anchor="middle" font-size="16">🔒</text>
+              <circle cx="150" cy="60" r="19" fill="#E9E2D2"/>
+              <text x="150" y="67" text-anchor="middle" font-size="16">🔒</text>
+            </svg>
+          </div>
+        </div></div>
+        <h3>The road</h3>
+        <p class="cap">Opens scrolled to the pulsing node — the only moving thing. Icons, never numbers.</p>
+      </div>
+
+      <!-- LEVEL -->
+      <div class="phone-card">
+        <div class="phone"><div class="screen">
+          <div class="lvl">
+            <div class="speech"><span class="snd">🔊</span>“Where is the cow?”</div>
+            <svg class="mini-fox" viewBox="0 0 300 300" aria-hidden="true">
+              <path d="M96 92 l-18 -46 q28 2 44 24 z" fill="#E5893B"/>
+              <path d="M204 92 l18 -46 q-28 2 -44 24 z" fill="#E5893B"/>
+              <circle cx="150" cy="128" r="66" fill="#F2A93B"/>
+              <path d="M150 150 q-34 30 -56 6 q-6 -34 20 -52 q22 -12 36 -6 z" fill="#FFF3E2"/>
+              <path d="M150 150 q34 30 56 6 q6 -34 -20 -52 q-22 -12 -36 -6 z" fill="#FFF3E2"/>
+              <ellipse cx="122" cy="118" rx="9" ry="11" fill="#29372E"/>
+              <ellipse cx="178" cy="118" rx="9" ry="11" fill="#29372E"/>
+              <ellipse cx="150" cy="146" rx="11" ry="8.5" fill="#5C3A1E"/>
+              <path d="M138 160 q12 10 24 0" fill="none" stroke="#5C3A1E" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+            <div class="choices">
+              <div class="choice right">🐮</div>
+              <div class="choice">🦆</div>
+              <div class="choice big">🐷</div>
+            </div>
+          </div>
+        </div></div>
+        <h3>The question</h3>
+        <p class="cap">3–4 big picture choices, ≥120pt targets. Each one names itself when touched.</p>
+      </div>
+
+      <!-- CELEBRATE -->
+      <div class="phone-card">
+        <div class="phone"><div class="screen">
+          <div class="party">
+            <span class="confetti" style="top:12%;left:16%">🎉</span>
+            <span class="confetti" style="top:8%;right:18%">⭐</span>
+            <span class="confetti" style="top:30%;right:8%">🎊</span>
+            <span class="confetti" style="top:34%;left:8%">✨</span>
+            <svg class="fox-big" viewBox="0 0 300 300" aria-hidden="true">
+              <path d="M96 92 l-18 -46 q28 2 44 24 z" fill="#E5893B"/>
+              <path d="M204 92 l18 -46 q-28 2 -44 24 z" fill="#E5893B"/>
+              <circle cx="150" cy="128" r="66" fill="#F2A93B"/>
+              <path d="M150 150 q-34 30 -56 6 q-6 -34 20 -52 q22 -12 36 -6 z" fill="#FFF3E2"/>
+              <path d="M150 150 q34 30 56 6 q6 -34 -20 -52 q-22 -12 -36 -6 z" fill="#FFF3E2"/>
+              <path d="M113 116 q9 -10 18 0" stroke="#29372E" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <path d="M169 116 q9 -10 18 0" stroke="#29372E" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="150" cy="146" rx="11" ry="8.5" fill="#5C3A1E"/>
+              <path d="M132 158 q18 18 36 0" fill="none" stroke="#5C3A1E" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+            <span class="badge">“You found the cow!”</span>
+            <div class="stickers">🐮 <span style="opacity:.25">🐑</span> <span style="opacity:.25">🐔</span></div>
+          </div>
+        </div></div>
+        <h3>The win</h3>
+        <p class="cap">~1.5s of joy: jump, one sticker earned, back to the road. Short on purpose — celebration never outshines learning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ALIVE ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>How Pip stays alive</h2>
+      <p>The mascot above is running the real spec, in this page. Three layers, authored once in Rive, running under every state.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="num">3.6s</span> Breathing</h3>
+        <p>Chest scales up <b>1–2%</b>, shoulders and head follow a beat <b>later</b> — the offset is what reads as alive. First and last frame identical, so the loop never pops.</p>
+        <span class="rule">runs under every other state</span>
+      </div>
+      <div class="card">
+        <h3><span class="num">3–5s</span> Blink</h3>
+        <p>A quick eyelid close on a <b>randomised timer</b> — never synced to the breath, or the loop becomes visible. Built as a simple shape swap, not an eye rig.</p>
+        <span class="rule">random interval, never on the loop</span>
+      </div>
+      <div class="card">
+        <h3><span class="num">30–60s</span> Fidgets</h3>
+        <p>Ear flick, head tilt, tail swish, a look off-screen — <b>3–5 of them</b>, picked at random, blended in over 0.2s. A lone idle loop is noticed in ~90 seconds; fidgets hide it.</p>
+        <span class="rule">kids replay far more than adults</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATES ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>One state machine</h2>
+      <p>Duolingo-style: the app fires named triggers, Rive plays the feeling. Every state blends back to idle.</p>
+    </div>
+    <div class="sm">
+      <div class="sm-row">
+        <div class="state idle">
+          <div class="t">Idle</div>
+          <div class="d">breathe · blink · fidget</div>
+          <span class="trig">default</span>
+        </div>
+        <div class="state">
+          <div class="t">Giggle</div>
+          <div class="d">bounce when poked</div>
+          <span class="trig">tap</span>
+        </div>
+        <div class="state win">
+          <div class="t">Celebrate</div>
+          <div class="d">jump, arms up</div>
+          <span class="trig">correct</span>
+        </div>
+        <div class="state retry">
+          <div class="t">Encourage</div>
+          <div class="d">warm nod — never sad</div>
+          <span class="trig">retry</span>
+        </div>
+        <div class="state">
+          <div class="t">Talk</div>
+          <div class="d">jaw follows loudness</div>
+          <span class="trig">isSpeaking</span>
+        </div>
+      </div>
+      <p class="base">There is <b>no fail pose</b> anywhere in the rig. A wrong tap gets encouragement and an easier retry — by design, not by accident.</p>
+    </div>
+  </section>
+
+  <!-- ================= VOICE ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>How the voice works</h2>
+      <p>Our users can't read, so audio is the interface. One warm human voice — recorded slow, warm, and a little over-the-top.</p>
+    </div>
+    <div class="voice">
+      <div class="talk">
+        <div class="line"><span class="who">🦊</span><div class="bubble">“Where is the cow?”<em>task line — plays on level start</em></div></div>
+        <div class="line"><span class="who kid">👧</span><div class="bubble">taps the duck<em>no buzzer, no red X</em></div></div>
+        <div class="line"><span class="who">🦊</span><div class="bubble">“That's the duck! The cow says moo-oo…”<em>hint 1 — one wrong choice fades out</em></div></div>
+        <div class="line"><span class="who kid">👧</span><div class="bubble">taps the cow</div></div>
+        <div class="line"><span class="who">🦊</span><div class="bubble">“You found the cow! Moo!”<em>praise — 4–5 variants so it never repeats</em></div></div>
+      </div>
+      <div class="mix">
+        <h3>Three channels, one rule</h3>
+        <div class="track vo"><span class="lbl">VOICE</span><div class="bar"><i></i></div></div>
+        <div class="track sfx"><span class="lbl">SFX</span><div class="bar"><i></i></div></div>
+        <div class="track mus"><span class="lbl">MUSIC</span><div class="bar"><i></i></div></div>
+        <ul>
+          <li><b>Voice always wins</b> — music ducks under it, sound effects never cut it off.</li>
+          <li>Every line for the current chapter is <b>preloaded</b>. A late voice line feels broken to a four-year-old.</li>
+          <li>While a line plays, <code>isSpeaking</code> is on and Pip's jaw follows the loudness — no lip-sync tech needed at this size.</li>
+          <li>Plain <b>.m4a files</b> named <code>vo_&lt;level&gt;_&lt;line&gt;.m4a</code>, mapped from the level JSON.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RULES ================= -->
+  <section>
+    <div class="sec-head">
+      <h2>Rules we never break</h2>
+      <p>Candy Crush gave us the road. We deliberately left its economy behind — those mechanics work by exploiting things a four-year-old can't defend against.</p>
+    </div>
+    <div class="rules">
+      <div class="rule-row"><span class="no">✕</span> Lives, timers, streaks, scores, stars</div>
+      <div class="rule-row"><span class="yes">✓</span> Retries are free, forever, for everything</div>
+      <div class="rule-row"><span class="no">✕</span> Levels that get harder after failure</div>
+      <div class="rule-row"><span class="yes">✓</span><span>Levels that get <b>easier</b> — fewer choices, stronger hint</span></div>
+      <div class="rule-row"><span class="no">✕</span> Anything that takes progress away</div>
+      <div class="rule-row"><span class="yes">✓</span> Stickers only ever add up</div>
+      <div class="rule-row"><span class="no">✕</span> Ads, IAP prompts, links a child can reach</div>
+      <div class="rule-row"><span class="yes">✓</span> Grown-up things behind a worded-maths gate</div>
+      <div class="rule-row"><span class="no">✕</span> Drag, pinch, long-press, swipe</div>
+      <div class="rule-row"><span class="yes">✓</span> Tap only · ≥120pt targets · taps debounced</div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Critter Camp · design page v0.2</span>
+    <span>Specs: GAME_DESIGN.md · Research: critter-camp-design-doc.md</span>
+    <span>Milestone that matters: a child finishes a level with no help</span>
+  </footer>
+
+</div>
+</body>
+</html>

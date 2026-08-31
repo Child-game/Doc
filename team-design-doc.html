@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critter Camp — Team Design Doc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap">
+<style>
+  :root{
+    --meadow:#DEEDDC; --cream:#FFF9EE; --ink:#29372E; --ink-soft:#5C6B5E;
+    --marigold:#F2A93B; --marigold-deep:#C9880F; --berry:#D95D4E; --leaf:#5E9B6B;
+    --leaf-soft:#DCEBDD; --line:#B9D2B6; --shadow:0 5px 0 rgba(41,55,46,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--meadow);color:var(--ink);
+    font-family:"Nunito","Trebuchet MS",Verdana,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+  h1,h2,h3{font-family:"Baloo 2","Arial Rounded MT Bold",sans-serif;margin:0;line-height:1.12}
+  a{color:var(--berry)}
+  :focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:6px}
+
+  header{padding:52px 0 26px;border-bottom:3px solid var(--ink);margin-bottom:36px}
+  .kicker{display:inline-block;font-weight:800;font-size:12px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--leaf);background:var(--cream);border:2px solid var(--line);padding:5px 13px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(2.3rem,6vw,3.4rem);font-weight:800}
+  h1 .dot{color:var(--marigold)}
+  header p{color:var(--ink-soft);max-width:58ch;margin:12px 0 18px;font-size:1.05rem}
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{font-weight:800;font-size:13px;background:var(--cream);border:2px solid var(--line);
+    border-radius:999px;padding:6px 14px;box-shadow:var(--shadow)}
+  .chip b{color:var(--berry)}
+
+  section{margin-bottom:44px}
+  h2{font-size:clamp(1.4rem,3.4vw,1.85rem);font-weight:800;margin-bottom:4px}
+  .sub{color:var(--ink-soft);margin:0 0 16px;max-width:66ch}
+  h3{font-size:1.08rem;margin:20px 0 6px}
+  p{margin:0 0 12px;max-width:70ch}
+  ul{margin:0 0 14px;padding-left:22px;max-width:68ch}
+  li{margin-bottom:6px}
+  b{color:var(--ink)}
+
+  .panel{background:var(--cream);border:2px solid var(--line);border-radius:18px;
+    padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px}
+  .panel.flag{border-color:var(--berry)}
+  .panel .tag{font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--marigold-deep);display:block;margin-bottom:6px}
+  .panel.flag .tag{color:var(--berry)}
+  .panel p:last-child,.panel ul:last-child{margin-bottom:0}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:760px){.cols{grid-template-columns:1fr}}
+  .cols .panel{margin:0}
+  .cols h3{margin-top:0}
+  .cols p{font-size:14.5px;color:var(--ink-soft)}
+
+  table{border-collapse:collapse;width:100%;font-size:14.5px;background:var(--cream);
+    border:2px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .tw{overflow-x:auto;margin-bottom:16px;border-radius:14px}
+  th{font-family:"Baloo 2",sans-serif;text-align:left;font-size:13px;letter-spacing:.04em;
+    color:var(--cream);background:var(--ink);padding:9px 14px;white-space:nowrap}
+  td{padding:9px 14px;border-top:1.5px solid var(--leaf-soft);vertical-align:top;color:var(--ink-soft)}
+  td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:.85em;background:var(--leaf-soft);
+    padding:1px 6px;border-radius:6px}
+
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+  @media(max-width:640px){.rules{grid-template-columns:1fr}}
+  .rule{background:var(--cream);border:2px solid var(--line);border-radius:13px;
+    padding:10px 15px;font-weight:700;font-size:14px;display:flex;gap:10px;align-items:baseline}
+  .rule .no{color:var(--berry);font-family:"Baloo 2",sans-serif;font-weight:800}
+  .rule .yes{color:var(--leaf);font-family:"Baloo 2",sans-serif;font-weight:800}
+
+  footer{border-top:3px dashed var(--line);padding-top:18px;font-size:13.5px;
+    font-weight:700;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="kicker">Team design doc · v0.2 · 31 Aug 2026</span>
+    <h1>Critter Camp<span class="dot">.</span></h1>
+    <p>A learning app for children aged 3–6 who can't read yet. One friendly fox, a winding road of small wins, and a voice that carries the whole interface. This is everything the team needs to build v1.</p>
+    <div class="chips">
+      <span class="chip">Platform <b>iOS first</b></span>
+      <span class="chip">Stack <b>Flutter + Rive</b></span>
+      <span class="chip">V1 <b>Animals · 10 levels</b></span>
+      <span class="chip">Target <b>TestFlight in ~6 weeks</b></span>
+    </div>
+  </header>
+
+  <!-- ============ 1 ============ -->
+  <section>
+    <h2>1 · What we're building</h2>
+    <div class="tw"><table>
+      <tr><th colspan="2">Product definition</th></tr>
+      <tr><td>Audience</td><td>Children 3–6, pre-literate. They can't read words <i>or</i> numerals — so no text anywhere the child goes, ever.</td></tr>
+      <tr><td>The buyer</td><td>The parent. They install, pay later, and read the progress report behind an adult gate.</td></tr>
+      <tr><td>V1 scope</td><td>One module — <b>Animals</b> — ten levels, one hero character (Pip the Fox). Alphabets and Numbers come after a real child finishes ten levels unaided.</td></tr>
+      <tr><td>Session</td><td>Levels of 2–4 minutes, chapters of 3–5 levels. One chapter ≈ one 15-minute sitting with a happy ending built in.</td></tr>
+      <tr><td>Fail state</td><td>None. No lives, timers, scores, or streaks. Wrong answers make the level <b>easier</b>, never harder.</td></tr>
+      <tr><td>Network</td><td>None. No backend, no accounts, no analytics SDK. Progress is a local JSON file per child.</td></tr>
+    </table></div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section>
+    <h2>2 · Three decisions, already researched</h2>
+    <p class="sub">Each of these came out of a deep-research pass. Short version here; ask for the full research doc if you want the citations.</p>
+    <div class="cols">
+      <div class="panel">
+        <h3>2D, not 3D</h3>
+        <p>Preschool attachment runs on <b>contingency, voice and motion</b> — not rendering. Essentially every category leader (Khan Kids, Duolingo ABC, Pok Pok, Sago Mini) ships stylized 2D. Kids don't prioritize realism; one study found less-realistic characters taught <b>better</b>.</p>
+      </div>
+      <div class="panel">
+        <h3>Flutter + Rive</h3>
+        <p>Flutter is our skill and owns the 80% that is UI. Rive is what <b>Duolingo's whole character system</b> runs on: one <code>.riv</code> file, a state machine, named triggers. We remix a CC-BY marketplace rig instead of rigging from scratch. Cost: $0–27.</p>
+      </div>
+      <div class="panel">
+        <h3>Road yes, economy no</h3>
+        <p>We keep Candy Crush's winding map — it's genuinely good wayfinding for pre-readers. We strip everything designed to exploit: lives, streaks, near-miss tuning, loss. Those mechanics work on vulnerabilities a 4-year-old can't defend against.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section>
+    <h2>3 · The game loop</h2>
+    <p><b>The map:</b> one vertical scrolling road, ten nodes in themed chapters (farm → pond → forest). It opens already scrolled to the current node — the only pulsing thing on screen, so the child knows where to tap without reading. Nodes are pictures of the activity, never numbers. Completed nodes show a check and a sticker; future nodes are visible but locked.</p>
+    <p><b>A level:</b> enter from the map → Pip speaks the task (<i>"Where is the cow?"</i>) → child taps among 3–4 big picture choices → celebration, or a warm hint with one wrong choice removed → back to the map, node done.</p>
+    <p><b>The unlock ritual</b> (~1.5s, the only spectacle in the app): Pip walks the road to the next node, it pops from grey to colour, a sticker flies onto the finished one, camera settles on the new current node. Kept short deliberately — research says ornament unrelated to the learning goal <i>breaks</i> learning.</p>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section>
+    <h2>4 · The character</h2>
+    <p class="sub">Pip is a Rive rig with one state machine. Aliveness comes from three idle layers that run under everything — see <b>animation-showcase.html</b> for all of this live.</p>
+    <div class="tw"><table>
+      <tr><th>Layer</th><th>Spec</th></tr>
+      <tr><td>Breathing</td><td>3.6s loop, chest scales 1–2%, head follows ~0.2s later (the offset is what reads as alive). First and last frame identical.</td></tr>
+      <tr><td>Blink</td><td>Every 3–5s on a randomised timer — never synced to the breath loop.</td></tr>
+      <tr><td>Fidgets</td><td>3–5 clips (ear flick, head tilt, tail wag), every 30–60s, blended in over 0.2s. A lone idle loop is noticed in ~90 seconds.</td></tr>
+    </table></div>
+    <div class="tw"><table>
+      <tr><th>Trigger</th><th>State</th><th>Note</th></tr>
+      <tr><td><code>tap</code></td><td>Giggle</td><td>bounce when the child pokes him</td></tr>
+      <tr><td><code>correct</code></td><td>Celebrate</td><td>jump, arms up, eyes-closed smile</td></tr>
+      <tr><td><code>retry</code></td><td>Encourage</td><td>warm nod — <b>there is no sad or fail pose in the rig</b></td></tr>
+      <tr><td><code>isSpeaking</code></td><td>Talk</td><td>jaw follows audio loudness; no phoneme lip-sync in v1</td></tr>
+    </table></div>
+    <p>Art style is the cartoon cast (see <b>animation-showcase.html</b>); the naturalistic study (<b>realistic-cast.html</b>) exists for comparison, but evidence favours cartoon for this age.</p>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section>
+    <h2>5 · Voice — the actual interface</h2>
+    <ul>
+      <li><b>Every tappable thing names itself when touched.</b> "Cow!", "Stickers!", chapter titles spoken on entry. No text fallback exists.</li>
+      <li><b>One warm human voice</b> for Pip — recorded slow and a little over-the-top. We record ourselves first; pro VO ($100–500) only if kids don't respond in testing.</li>
+      <li><b>Per level:</b> one task line, two hints (each more helpful), 4–5 praise variants so praise never repeats back-to-back.</li>
+      <li><b>Mixing:</b> three channels — VO / SFX / music. Voice always wins: music ducks under it, SFX never cuts it off.</li>
+      <li><b>Preload</b> every line for the current chapter. A late voice line reads as "broken" to a four-year-old.</li>
+      <li>Files: <code>vo_&lt;level&gt;_&lt;line&gt;.m4a</code>, mapped from the level JSON.</li>
+    </ul>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section>
+    <h2>6 · Hard rules</h2>
+    <p class="sub">These are researched numbers and commitments, not preferences. They don't get negotiated in code review.</p>
+    <div class="rules">
+      <div class="rule"><span class="yes">✓</span><span>Touch targets <b>≥120pt</b>, ≥100pt apart (2cm — ~7× Apple's 44pt; the HIG minimum is not enough for small fingers)</span></div>
+      <div class="rule"><span class="yes">✓</span><span><b>Tap is the only gesture.</b> Any drag also works as tap-then-tap</span></div>
+      <div class="rule"><span class="yes">✓</span><span>Debounce taps ~600ms; kids multi-tap when they mean once</span></div>
+      <div class="rule"><span class="yes">✓</span><span>Orientation locked · autosave on every completion</span></div>
+      <div class="rule"><span class="yes">✓</span><span>Adult gate = arithmetic in words ("what is fourteen plus seven?") before settings, links, purchases, progress report</span></div>
+      <div class="rule"><span class="yes">✓</span><span>Reduce Motion honoured · feedback never by colour alone</span></div>
+      <div class="rule"><span class="no">✕</span><span>No lives, timers, streaks, scores, leaderboards, push notifications</span></div>
+      <div class="rule"><span class="no">✕</span><span>No third-party SDKs at all — no Firebase, no analytics, no ads. This is both ethics and Apple Kids Category law (guideline 1.3)</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 7 ============ -->
+  <section>
+    <h2>7 · Build plan</h2>
+    <div class="tw"><table>
+      <tr><th>Week</th><th>Work</th><th>Gate — done means</th></tr>
+      <tr><td>1</td><td>Rive basics; remix a CC-BY marketplace rig into Pip; idle + blink + tap running in a Flutter screen</td><td>Pip breathes and reacts on a real iPhone</td></tr>
+      <tr><td>2</td><td>Audio spine (3 channels, ducking); map skeleton — 10 nodes on a spline, progress JSON</td><td>Complete a stub level, next unlocks, survives relaunch</td></tr>
+      <tr><td>3</td><td>One full level loop with voice, hints, celebration, unlock ritual</td><td>Loop runs end-to-end untouched</td></tr>
+      <tr><td>4</td><td><b>Child test</b> — 2–3 real 3–6 year-olds. Watch, don't explain</td><td><b>A child finishes a level with no adult help — the milestone that matters</b></td></tr>
+      <tr><td>5</td><td>Ten levels of Animals content; record all VO; adaptive scaffolding</td><td>All ten voiced, no fail state anywhere</td></tr>
+      <tr><td>6</td><td>Polish, parent screen + gate, accessibility, compliance audit, TestFlight</td><td>Build accepted; zero third-party network calls verified</td></tr>
+    </table></div>
+    <div class="panel flag">
+      <span class="tag">Open item — compliance</span>
+      <p>Detailed Kids Category / COPPA-2025 research is <b>incomplete</b> (the deep-research pass on it failed). What we know is baked into the rules above; the full pass must be redone before submission. Owner needed.</p>
+    </div>
+  </section>
+
+  <footer>
+    <b>Companion files:</b> design-page.html (visual design) · animation-showcase.html (living cast) · realistic-cast.html (style study B) · GAME_DESIGN.md (spec) &nbsp;—&nbsp; full research with citations: critter-camp-design-doc.md
+  </footer>
+</div>
+</body>
+</html>
